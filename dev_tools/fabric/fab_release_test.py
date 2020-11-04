@@ -240,7 +240,7 @@ def airtime_182_tar():
         
 def airtime_18x_tar(root_dir, version):
     do_sudo('apt-get update')
-    do_sudo('apt-get install -y --force-yes tar gzip unzip apache2 php5-pgsql libapache2-mod-php5 ' + \
+    do_sudo('apt-get install -y tar gzip unzip apache2 php5-pgsql libapache2-mod-php5 ' + \
         'php-pear php5-gd postgresql odbc-postgresql python python-configobj poc-streamer ' + \
         'lame daemontools daemontools-run python-mutagen libsoundtouch-ocaml sudo ' + \
         'libtaglib-ocaml libao-ocaml libmad-ocaml libesd0 icecast2 oggvideotools ' + \
@@ -405,11 +405,11 @@ def airtime_latest_deb():
     append('/etc/apt/sources.list', "deb http://apt.sourcefabric.org/ lucid main", use_sudo=True)
     append('/etc/apt/sources.list', "deb http://archive.ubuntu.com/ubuntu/ lucid multiverse", use_sudo=True)
     do_sudo('apt-get update')
-    do_sudo('apt-get install -y --force-yes sourcefabric-keyring')
+    do_sudo('apt-get install -y sourcefabric-keyring')
     do_sudo('apt-get install -y postgresql')
     do_sudo('apt-get install -y icecast2')
     do_sudo('apt-get purge -y pulseaudio')
-    do_sudo('apt-get install -y --force-yes airtime')
+    do_sudo('apt-get install -y airtime')
     
 def airtime_git_branch(branch="2.5.x"):
     do_sudo('apt-get update')

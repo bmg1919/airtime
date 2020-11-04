@@ -39,7 +39,7 @@ lxc-attach -n ${name} -- apt-get update
 echo "...Done"
 
 echo -e "\n * Installing git..."
-lxc-attach -n ${name} -- apt-get -y --force-yes install git
+lxc-attach -n ${name} -- apt-get -y install git
 echo "...Done"
 
 echo -e "\n * Cloning Airtime..."

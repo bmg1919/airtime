@@ -191,8 +191,8 @@ def compile_liquidsoap(filename="liquidsoap"):
     print "Will get liquidsoap from " + url
 
     do_sudo('apt-get update')
-    do_sudo('apt-get upgrade -y --force-yes')
-    do_sudo('''apt-get install -y --force-yes ocaml-findlib libao-ocaml-dev libportaudio-ocaml-dev \
+    do_sudo('apt-get upgrade -y')
+    do_sudo('''apt-get install -y ocaml-findlib libao-ocaml-dev libportaudio-ocaml-dev \
 libmad-ocaml-dev libtaglib-ocaml-dev libalsa-ocaml-dev libtaglib-ocaml-dev libvorbis-ocaml-dev \
 libspeex-dev libspeexdsp-dev speex libladspa-ocaml-dev festival festival-dev \
 libsamplerate-dev libxmlplaylist-ocaml-dev libflac-dev \

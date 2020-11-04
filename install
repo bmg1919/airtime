@@ -290,7 +290,7 @@ if [ "$ignore_dependencies" = "f" ]; then
     set +e
     loudCmd "apt-get update"
     if [ -z "${dist}" ]; then
-        loudCmd "apt-get -y --force-yes install lsb-release"
+        loudCmd "apt-get -y install lsb-release"
         dist=`lsb_release -ds | awk '{print tolower($1);}'`
         code=`lsb_release -cs`
     fi
@@ -301,9 +301,9 @@ if [ "$ignore_dependencies" = "f" ]; then
 
     verbose "\n * Reading requirements-${dist,,}-${code,,}.apt..."
     if [ -f ${SCRIPT_DIR}/installer/lib/requirements-${dist,,}-${code,,}.apt ]; then
-        loudCmd "DEBIAN_FRONTEND=noninteractive apt-get -y -m --force-yes install $(grep -vE '^\s*#' ${SCRIPT_DIR}/installer/lib/requirements-${dist,,}-${code,,}.apt | tr '\n' ' ')"
+        loudCmd "DEBIAN_FRONTEND=noninteractive apt-get -y -m  install $(grep -vE '^\s*#' ${SCRIPT_DIR}/installer/lib/requirements-${dist,,}-${code,,}.apt | tr '\n' ' ')"
     else
-        loudCmd "DEBIAN_FRONTEND=noninteractive apt-get -y -m --force-yes install $(grep -vE '^\s*#' ${SCRIPT_DIR}/installer/lib/requirements-ubuntu-trusty.apt | tr '\n' ' ')"
+        loudCmd "DEBIAN_FRONTEND=noninteractive apt-get -y -m  install $(grep -vE '^\s*#' ${SCRIPT_DIR}/installer/lib/requirements-ubuntu-trusty.apt | tr '\n' ' ')"
     fi
     set -e
 else
@@ -312,6 +312,10 @@ else
     checkCommandExists "psql"
 fi
 
+if [ ! mp3gain ]; then
+    snapd install mp3gain
+    fi
+    
 if [ -f /etc/airtime/airtime.conf ]; then
     OLD_CONF=$(grep "[media-monitor]" /etc/airtime/airtime.conf)
     
@@ -320,9 +324,12 @@ if [ -f /etc/airtime/airtime.conf ]; then
     
         set +e
         verbose "Stopping airtime services..."
-        loudCmd "service airtime-playout stop-with-monit"
-        loudCmd "service airtime-media-monitor stop-with-monit"
-        loudCmd "service airtime-liquidsoap stop-with-monit"
+        #loudCmd "service airtime-playout stop-with-monit"
+        #loudCmd "service airtime-media-monitor stop-with-monit"
+        #loudCmd "service airtime-liquidsoap stop-with-monit"
+        loudCmd "service airtime-playout stop"
+        loudCmd "service airtime-media-monitor stop"
+        loudCmd "service airtime-liquidsoap stop"
         verbose "...Done"
         
         echo "Looks like you have an old version of Airtime. Your current /etc/airtime/airtime.conf \
@@ -474,7 +481,7 @@ for i in /etc/init/airtime*.template; do
 done
 
 set +e
-loudCmd "initctl reload-configuration"
+# loudCmd "initctl reload-configuration"
 loudCmd "systemctl daemon-reload" #systemd hipsters
 loudCmd "update-rc.d airtime-playout defaults" # Start at bootup, on Debian
 loudCmd "update-rc.d airtime-media-monitor defaults" # Start at bootup, on Debian
@@ -503,15 +510,15 @@ chmod -R a+x /var/tmp/airtime
 chown -R ${web_user}:${web_user} /var/tmp/airtime/
 
 # PHP Config File for Apache
-if [ ! -f "/etc/php5/apache2/conf.d/airtime.ini" ]; then
+if [ ! -f "/etc/php/7.2/apache2/conf.d/airtime.ini" ]; then
     verbose "\n * Creating Airtime PHP config for Apache..."
-    cp ${SCRIPT_DIR}/installer/php/airtime.ini /etc/php5/apache2/conf.d/airtime.ini
+    cp ${SCRIPT_DIR}/installer/php/airtime.ini /etc/php/7.2/apache2/conf.d/airtime.ini
 else
     verbose "\nAirtime PHP config for Apache already exists, skipping"
 fi
 
 # Enable Apache modules
-loudCmd "a2enmod rewrite php5"
+loudCmd "a2enmod rewrite php7.2"
 
 loud "\n-----------------------------------------------------"
 loud "              * Configuring PostgreSQL *              "

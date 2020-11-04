@@ -49,12 +49,13 @@ setup(name='airtime-media-monitor',
           'configobj',
           'docopt',
           'kombu',
-          'mutagen',
+          'mutagen==1.20',
           'poster',
           'PyDispatcher',
           'pyinotify',
           'pytz',
-          'wsgiref'
+          'wsgiref',
+          'more-itertools==2.6'
       ],
       zip_safe=False,
       data_files=data_files)

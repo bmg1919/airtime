@@ -42,7 +42,7 @@ build_env () {
     fi
     
     apt-get update
-    apt-get --force-yes -y install debootstrap dchroot
+    apt-get -y install debootstrap dchroot
     echo [$1] > /etc/schroot/chroot.d/$1.conf
     echo description=$1 >> /etc/schroot/chroot.d/$1.conf
     echo directory=/srv/chroot/$1 >> /etc/schroot/chroot.d/$1.conf

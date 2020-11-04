@@ -19,7 +19,8 @@ setup(name='api_clients',
 #           'amqplib',
 #           'anyjson',
 #           'argparse',
-        'configobj'
+        'configobj',
+        'zipp==0.5'
 #           'docopt',
 #           'kombu',
 #           'mutagen',
